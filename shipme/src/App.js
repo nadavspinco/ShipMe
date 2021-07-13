@@ -1,25 +1,42 @@
 import logo from './logo.svg';
 import './App.css';
-
+import SignUp from './signup';
+import SignIn from './SignIn';
+import {useSelector,connect} from 'react-redux'
+import Cookies from 'js-cookie'
+import {Route,Switch,useHistory} from 'react-router-dom'
 function App() {
+
+ let {jwt,user,showSignUpState}  = useSelector(state => state);
+ jwt = Cookies.get('jwt');
+
+ const histoy = useHistory();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Switch>
+      <Route exact path='/signin'>
+      {jwt? (() =>histoy.push('/')):<SignIn/> }
+
+      </Route>
+      <Route path='/signup'>
+      {jwt ? (() =>histoy.push('/')):<SignUp/> }
+      </Route>
+      <Route path='/'>
+      {!jwt? (() =>histoy.push('/signup')):<p>logged in</p> }
+      </Route>
+      </Switch>
     </div>
   );
 }
 
-export default App;
+
+// function mapStateToProps(state, ownProps) {
+//   return {
+//       jwt: state.jwt,
+//   };
+// }
+
+//export default connect(mapStateToProps)(App)
+export default (App)
+// </Switch>
+    //    {!jwt? (showSignUpState ? (<SignIn/>) : <SignUp/>):<p>logged in</p> }
