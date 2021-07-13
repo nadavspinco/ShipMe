@@ -5,6 +5,7 @@ import SignIn from './SignIn';
 import {useSelector,connect} from 'react-redux'
 import Cookies from 'js-cookie'
 import {Route,Switch,useHistory} from 'react-router-dom'
+import AppPage from './AppPage'
 function App() {
 
  let {jwt,user,showSignUpState}  = useSelector(state => state);
@@ -22,7 +23,7 @@ function App() {
       {jwt ? (() =>histoy.push('/')):<SignUp/> }
       </Route>
       <Route path='/'>
-      {!jwt? (() =>histoy.push('/signup')):<p>logged in</p> }
+      {!jwt? (() =>histoy.push('/signup')):<AppPage/> }
       </Route>
       </Switch>
     </div>
